@@ -1,0 +1,46 @@
+services:
+  php74-laravel:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    networks:
+      - php-network
+    volumes:
+      - .:/work
+    working_dir: /work/php7-laravel
+    command: php artisan serve --host=0.0.0.0
+    environment:
+      OTEL_SERVICE_NAME: "php74-laravel"
+  db:
+    image: mariadb:10.6
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
+      MARIADB_DATABASE: laravel
+    volumes:
+      - ./db:/var/lib/mysql:Z
+    networks:
+      - php-network
+  obi:
+    image: docker.io/otel/ebpf-instrument:main
+    pid: 'host'
+    privileged: true
+    environment:
+      OTEL_EBPF_CONFIG_PATH: "/configs/obi-config.yml"
+    volumes:
+      - ./obi-config.yml:/configs/obi-config.yml
+    networks:
+      - php-network
+
+  otel-collector:
+    image: mackerel/otelcol-mackerel:latest
+    environment:
+      MACKEREL_APIKEY: "${MACKEREL_APIKEY}"
+      OTELCOL_MACKEREL_HOST: otel-collector
+    networks:
+      - php-network
+
+networks:
+  php-network:

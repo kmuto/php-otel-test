@@ -1,0 +1,15 @@
+php7/php7-laravel/node_modules
+php7/php7-laravel/public/hot
+php7/php7-laravel/public/storage
+php7/php7-laravel/storage/*.key
+php7/php7-laravel/vendor
+php7/php7-laravel/.env
+php7/php7-laravel/.env.backup
+php7/php7-laravel/.phpunit.result.cache
+php7/php7-laravel/docker-compose.override.yml
+php7/php7-laravel/Homestead.json
+php7/php7-laravel/Homestead.yaml
+php7/php7-laravel/npm-debug.log
+php7/php7-laravel/yarn-error.log
+/.idea
+/.vscode
