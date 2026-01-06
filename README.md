@@ -29,9 +29,9 @@ docker compose run --rm php84-laravel ./setup.sh
 MACKEREL_APIKEY=<YOUR MACKEREL API KEY> docker compose up
 ```
 
-- http://localhost:8000/
-- http://localhost:8000/hello
-- http://localhost:8000/call
-- http://localhost:8000/query
+- http://localhost:8001/
+- http://localhost:8001/hello
+- http://localhost:8001/call
+- http://localhost:8001/query
 
 サービス名は「php84-laravel」としている。
