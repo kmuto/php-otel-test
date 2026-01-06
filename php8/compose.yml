@@ -13,6 +13,7 @@ services:
     environment:
       OTEL_SERVICE_NAME: "php84-laravel"
       OTEL_PHP_AUTOLOAD_ENABLED: true
+      OTEL_LOGS_EXPORTER: none
       OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
 
   db:
@@ -23,7 +24,7 @@ services:
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
       MARIADB_DATABASE: laravel
     volumes:
-      - ./db:/var/lib/mysql:Z
+      - php-db2:/var/lib/mysql
     networks:
       - php-network2
   #obi:
@@ -47,3 +48,6 @@ services:
 
 networks:
   php-network2:
+
+volumes:
+  php-db2:

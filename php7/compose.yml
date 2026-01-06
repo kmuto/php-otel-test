@@ -14,13 +14,13 @@ services:
       OTEL_SERVICE_NAME: "php74-laravel"
   db:
     image: mariadb:10.6
-    ports:
-      - "3306:3306"
+    #ports:
+    #  - "3306:3306"
     environment:
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
       MARIADB_DATABASE: laravel
     volumes:
-      - ./db:/var/lib/mysql:Z
+      - php-db:/var/lib/mysql
     networks:
       - php-network
   obi:
@@ -44,3 +44,6 @@ services:
 
 networks:
   php-network:
+
+volumes:
+  php-db:

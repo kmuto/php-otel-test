@@ -8,4 +8,4 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql \
 
 COPY opentelemetry.ini /usr/local/etc/php/conf.d/
 RUN pecl install opentelemetry \
-  && composer require -n open-telemetry/sdk open-telemetry/opentelemetry-auto-laravel open-telemetry/exporter-otlp
+  && composer require -n open-telemetry/sdk open-telemetry/opentelemetry-auto-laravel open-telemetry/exporter-otlp open-telemetry/opentelemetry-auto-mysqli
