@@ -3,13 +3,13 @@ services:
     build:
       context: .
     ports:
-      - "8001:8000"
+      - "8001:8001"
     networks:
       - php-network2
     volumes:
       - .:/work
     working_dir: /work/php8-laravel
-    command: php artisan serve --host=0.0.0.0
+    command: php artisan serve --host=0.0.0.0 --port=8001
     environment:
       OTEL_SERVICE_NAME: "php84-laravel"
       OTEL_PHP_AUTOLOAD_ENABLED: true
