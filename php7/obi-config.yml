@@ -4,6 +4,7 @@ open_port: 8000
 
 otel_traces_export:
   endpoint: http://otel-collector:4318
+  batch_timeout: 1s
 
 ebpf:
   context_propagation: all
