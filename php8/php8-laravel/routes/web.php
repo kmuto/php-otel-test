@@ -3,16 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
-Route::get('/index', function () {
-    return view('welcome');
-});
-
 Route::get('/', function () {
     $min_microseconds = 0;
     $max_microseconds = 2000000;
     $random_microseconds = rand($min_microseconds, $max_microseconds);
     usleep($random_microseconds);
-    return 'Hello World';
+    return view('hello', [ 'htmlData' => '' ]);
 });
 
 Route::get('/hello', function () {
@@ -27,34 +23,39 @@ Route::get('/hello', function () {
     }
     $sql = "SELECT id, name FROM fruits";
     $result = $mysqli->query($sql);
+    $htmlData = '';
     if ($result) {
-      echo "<h1>Fruits Table</h1>";
-      echo "<ul>";
+      $htmlData .= "<h1>Fruits Table</h1>";
+      $htmlData .= "<ul>";
       while ($row = $result->fetch_assoc()) {
-          echo "<li>{$row['id']}: {$row['name']}</li>";
+          $htmlData .= "<li>{$row['id']}: {$row['name']}</li>";
       }
-      echo "</ul>";
+      $htmlData .= "</ul>";
       $result->free();
     } else {
-      echo "Query error: " . $mysqli->error;
+      $htmlData .= "Query error: " . $mysqli->error;
     }
     $mysqli->close();
     $min_microseconds = 0;
     $max_microseconds = 1000000;
     $random_microseconds = rand($min_microseconds, $max_microseconds);
     usleep($random_microseconds);
-
-    return 'Hello World';
+    return view('hello', [ 'htmlData' => $htmlData ]);
 });
 
 Route::get('/call', function () {
     $response = Http::get('https://jsonplaceholder.typicode.com/posts');
+    $htmlData = '<p>Returned from External API Server:</p><div class="pre"><pre>';
     if ($response->successful()) {
-        return $response->json();
+        $posts = $response->json();
+        $prettyJson = json_encode($posts, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        $htmlData .= e(mb_substr($prettyJson, 0, 500)) . "...";
     }
+    $htmlData .= '</pre></div>';
     if ($response->failed()) {
         $response->throw();
     }
+    return view('hello', [ 'htmlData' => $htmlData ]);
 });
 
 Route::get('/error', function () {
