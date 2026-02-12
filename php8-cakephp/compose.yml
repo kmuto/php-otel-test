@@ -7,6 +7,10 @@ services:
       - .:/var/www/html
     environment:
       - DEBUG=true
+      - OTEL_SERVICE_NAME=php84-cakephp
+      - OTEL_PHP_AUTOLOAD_ENABLED=true
+      - OTEL_LOGS_EXPORTER=none
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
     depends_on:
       - db
 

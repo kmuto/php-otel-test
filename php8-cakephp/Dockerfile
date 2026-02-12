@@ -22,8 +22,14 @@ RUN a2enmod rewrite
 RUN sed -i 's/Listen 80/Listen 8081/' /etc/apache2/ports.conf
 RUN sed -i 's/:80/:8081/' /etc/apache2/sites-available/000-default.conf
 
+
 # Composerのインストール
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN docker-php-ext-install mysqli pdo pdo_mysql \
+  && docker-php-ext-enable mysqli pdo pdo_mysql \
+  && pecl install opentelemetry
+COPY opentelemetry.ini /usr/local/etc/php/conf.d/
 
 # 作業ディレクトリの設定
 WORKDIR /var/www/html
