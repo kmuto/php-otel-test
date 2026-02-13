@@ -1,7 +1,3 @@
-# composerのインストール
-# docker compose exec app /bin/bash
-# cd /var/www/html/php7-cakephp
-# composer install
 # MySQLコンテナに入る
 docker compose exec -T db mysql -u cake_user -ppassword cake_app <<EOF
 CREATE TABLE fruits (

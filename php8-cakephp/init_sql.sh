@@ -1,7 +1,4 @@
 # composerのインストール
-# docker compose exec app /bin/bash
-# cd /var/www/html/php8-cakephp
-# composer install
 #pecl install opentelemetry
 #composer require -n open-telemetry/sdk open-telemetry/opentelemetry-auto-cakephp open-telemetry/exporter-otlp open-telemetry/opentelemetry-auto-mysqli
 # MySQLコンテナに入る
