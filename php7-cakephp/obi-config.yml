@@ -1,0 +1,16 @@
+trace_printer: text
+
+open_port: 8080
+
+otel_traces_export:
+  endpoint: http://otel-collector:4318
+  batch_timeout: 1s
+
+ebpf:
+  context_propagation: all
+  track_request_headers: true
+
+attributes:
+  select:
+    traces:
+      include: ["db.query.text"]

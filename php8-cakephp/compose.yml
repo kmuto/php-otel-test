@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8081:8081"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - DEBUG=true
+      - OTEL_SERVICE_NAME=php84-cakephp
+      - OTEL_PHP_AUTOLOAD_ENABLED=true
+      - OTEL_LOGS_EXPORTER=none
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    platform: linux/amd64
+    #ports:
+    #  - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cake_app
+      MYSQL_USER: cake_user
+      MYSQL_PASSWORD: password
+
+  otel-collector:
+    image: mackerel/otelcol-mackerel:latest
+    environment:
+      MACKEREL_APIKEY: "${MACKEREL_APIKEY}"
+      OTELCOL_MACKEREL_HOST: otel-collector
