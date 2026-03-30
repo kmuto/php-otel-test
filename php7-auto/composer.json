@@ -1,0 +1,14 @@
+{
+  "name": "arthur1/ext-opentelemetry_php74",
+  "description": "Auto-instrumentation extension for OpenTelemetry in PHP 7.4",
+  "type": "php-ext",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "php-ext": {
+    "extension-name": "opentelemetry_php74",
+    "build-path": "ext"
+  },
+  "require": {
+    "php": "^7.4"
+  }
+}
