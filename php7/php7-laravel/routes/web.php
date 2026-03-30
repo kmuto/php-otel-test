@@ -17,25 +17,32 @@ Route::get('/hello', function () {
     $random_microseconds = rand($min_microseconds, $max_microseconds);
     usleep($random_microseconds);
 
-    $mysqli = new mysqli('db', 'root', '', 'laravel');
-    if ($mysqli->connect_errno) {
-      die("MySQL connection failed: " . $mysqli->connect_error);
+    $dsn = "mysql:host=db;dbname=laravel;charset=utf8mb4";
+    $options = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES   => false,
+    ];
+
+    try {
+        $pdo = new PDO($dsn, "root", null, $options);
+    } catch (\PDOException $e) {
+        throw new \PDOException($e->getMessage(), (int)$e->getCode());
     }
-    $sql = "SELECT id, name FROM fruits";
-    $result = $mysqli->query($sql);
-    $htmlData = '';
-    if ($result) {
-      $htmlData .= "<h1>Fruits Table</h1>";
-      $htmlData .= "<ul>";
-      while ($row = $result->fetch_assoc()) {
-          $htmlData .= "<li>{$row['id']}: {$row['name']}</li>";
-      }
-      $htmlData .= "</ul>";
-      $result->free();
-    } else {
-      $htmlData .= "Query error: " . $mysqli->error;
+
+    try {
+        $stmt = $pdo->prepare("SELECT id, name FROM fruits");
+        $stmt->execute();
+        $htmlData = '';
+        $htmlData .= "<h1>Fruits Table</h1>";
+        $htmlData .= "<ul>";
+        while ($row = $stmt->fetch()) {
+            $htmlData .= "<li>" . htmlspecialchars((string)$row['id']) . ": " . htmlspecialchars($row['name']) . "</li>";
+        }
+        $htmlData .= "</ul>";
+    } catch(\PDOException $e) {
+        $htmlData .= "Query error: " . htmlspecialchars($e->getMessage());
     }
-    $mysqli->close();
     $min_microseconds = 0;
     $max_microseconds = 1000000;
     $random_microseconds = rand($min_microseconds, $max_microseconds);

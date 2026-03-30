@@ -1,19 +1,36 @@
 <?php
-$mysqli = new mysqli('db', 'root', null, 'laravel');
-if ($mysqli->connect_error) {
-    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
-}
+$dsn = "mysql:host=db;dbname=laravel;charset=utf8mb4";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
 
-if ($mysqli->multi_query("CREATE TABLE fruits (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(50) NOT NULL
-);
-INSERT INTO fruits (name) VALUES
-  ('Apple'),
-  ('Orange'),
-  ('Grape'),
-  ('Banana'),
-  ('Strawberry');")) {
-} else {
-    echo $mysqli->error;
+try {
+    $pdo = new PDO($dsn, "root", null, $options);
+    $tableName = 'fruits';
+    $query = $pdo->query("SHOW TABLES LIKE '$tableName'");
+    $tableExists = $query->rowCount() > 0;
+
+    if ($tableExists) {
+        echo "Table '$tableName' already exists. Skipping...\n";
+    } else {
+        $pdo->exec("CREATE TABLE fruits (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(50) NOT NULL
+        )");
+
+        $sql = "INSERT INTO fruits (name) VALUES (?)";
+        $stmt = $pdo->prepare($sql);
+
+        $fruits = ['Apple', 'Orange', 'Grape', 'Banana', 'Strawberry'];
+        foreach ($fruits as $fruit) {
+            $stmt->execute([$fruit]);
+        }
+        echo "Table '$tableName' created and data inserted.\n";
+    }
+    // ------------------------------
+
+} catch (\PDOException $e) {
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
