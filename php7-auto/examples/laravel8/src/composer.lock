@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37791a7a8eb23ff8fb6008ae7078e53d",
+    "content-hash": "fe32f543ad5e96f2fe4ac7e1d254ea4f",
     "packages": [
         {
             "name": "arthur1/opentelemetry-php74-auto-laravel",

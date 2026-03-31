@@ -11,7 +11,6 @@ services:
       dockerfile: examples/laravel8/Dockerfile
     volumes:
       - ../../src/Instrumentation/Laravel:/usr/src/instrumentation-laravel
-      - ../../src/Instrumentation/PDO:/usr/src/instrumentation-pdo
       - ./src:/app
     environment:
       - OTEL_SERVICE_NAME=laravel8-php74-demo

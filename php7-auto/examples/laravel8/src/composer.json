@@ -10,10 +10,6 @@
     "repositories": [
       {
         "type": "path",
-        "url": "/usr/src/instrumentation-pdo"
-      },
-      {
-        "type": "path",
         "url": "/usr/src/instrumentation-laravel"
       }
     ],
