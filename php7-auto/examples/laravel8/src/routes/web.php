@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FruitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Route::get('/', function () {
     usleep($random_microseconds);
     return view('hello', [ 'htmlData' => '' ]);
 });
+
+Route::get('/fruits', [FruitController::class, 'index']);
 
 Route::get('/hello', function () {
     $min_microseconds = 0;

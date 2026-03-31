@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4de3971a32e7cf7e3028117e007f070f",
+    "content-hash": "37791a7a8eb23ff8fb6008ae7078e53d",
     "packages": [
         {
             "name": "arthur1/opentelemetry-php74-auto-laravel",
@@ -35,63 +35,6 @@
                 "MIT"
             ],
             "description": "OpenTelemetry auto-instrumentation for Laravel with PHP 7.4",
-            "transport-options": {
-                "relative": false
-            }
-        },
-        {
-            "name": "arthur1/opentelemetry-php74-auto-pdo",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "/usr/src/instrumentation-pdo",
-                "reference": "72a379436a95f6805593a1639c04298544edf87e"
-            },
-            "require": {
-                "ext-opentelemetry_php74": "*",
-                "ext-pdo": "*",
-                "open-telemetry/api": "^1.0",
-                "open-telemetry/sem-conv": "^1.0",
-                "php": "^7.4",
-                "symfony/polyfill-mbstring": "^1.33"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3",
-                "open-telemetry/sdk": "^1.0",
-                "open-telemetry/test-utils": "^0.2.0",
-                "phan/phan": "^5.0",
-                "php-http/mock-client": "*",
-                "phpstan/phpstan": "^1.1",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^9.5",
-                "psalm/plugin-phpunit": "^0.19.2",
-                "vimeo/psalm": "6.4.0"
-            },
-            "suggest": {
-                "ext-mbstring": "For better performance than symfony/polyfill-mbstring"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "OpenTelemetryPHP74\\Instrumentation\\PDO\\": "src/"
-                },
-                "files": [
-                    "_register.php"
-                ]
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "description": "OpenTelemetry auto-instrumentation for PDO with PHP 7.4",
-            "homepage": "https://opentelemetry.io/docs/languages/php/",
-            "keywords": [
-                "instrumentation",
-                "open-telemetry",
-                "opentelemetry",
-                "otel",
-                "pdo",
-                "tracing"
-            ],
             "transport-options": {
                 "relative": false
             }
@@ -8719,8 +8662,7 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
-        "arthur1/opentelemetry-php74-auto-laravel": 20,
-        "arthur1/opentelemetry-php74-auto-pdo": 20
+        "arthur1/opentelemetry-php74-auto-laravel": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
