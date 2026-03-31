@@ -1,0 +1,27 @@
+{
+  "name": "arthur1/opentelemetry-php74-auto-laravel",
+  "description": "OpenTelemetry auto-instrumentation for Laravel with PHP 7.4",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^7.4",
+    "ext-opentelemetry_php74": "*",
+    "open-telemetry/api": "^1.0",
+    "open-telemetry/sdk": "^1.0",
+    "open-telemetry/sem-conv": "^1.0",
+    "laravel/framework": "^6.0 || ^7.0 || ^8.0"
+  },
+  "autoload": {
+    "files": [
+      "_register.php"
+    ],
+    "psr-4": {
+      "OpenTelemetryPHP74\\Instrumentation\\Laravel\\": "src/"
+    }
+  },
+  "config": {
+    "lock": false,
+    "sort-packages": true
+  }
+}
