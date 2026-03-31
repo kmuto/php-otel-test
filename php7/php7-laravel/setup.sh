@@ -16,5 +16,4 @@ EOT
 
 php artisan key:generate
 php artisan migrate
-
-php create-table.php
+php artisan db:seed

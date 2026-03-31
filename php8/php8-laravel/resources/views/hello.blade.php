@@ -81,7 +81,7 @@
         </div>
         <div class="links">
           <p><a href="/">Top</a><br>
-          <a href="/hello">Query to MySQL internally</a><br>
+          <a href="/fruits">Query to MySQL internally</a><br>
           <a href="/call">Call External API</a><br>
           <a href="/query">Index Query (causes an Internal Error)</a></p>
         </div>
