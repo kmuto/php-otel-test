@@ -19,6 +19,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://mackerel:4318
       - OTEL_PHP_AUTOLOAD_ENABLED=true
       - OTEL_PHP_TRACES_PROCESSOR=simple
+      - OTEL_RESOURCE_ATTRIBUTES=service.namespace=php-demo
  
   db:
     image: mariadb:10.6
