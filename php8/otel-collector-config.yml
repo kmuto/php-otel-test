@@ -6,6 +6,11 @@ receivers:
 
 processors:
   batch:
+  transform:
+    log_statements:
+      - context: log
+        statements:
+          - set(time_unix_nano, observed_time_unix_nano) where time_unix_nano == 0
 
 exporters:
   debug: # コンソールにテレメトリーデータを出力するためdebugを使用
@@ -42,4 +47,5 @@ service:
       exporters: [otlp_http]
     logs:
       receivers: [otlp]
+      processors: [transform]
       exporters: [debug, otlp_http, otlp_http/loki]
