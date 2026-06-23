@@ -127,6 +127,11 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'otlp' => [
+            'driver' => 'custom',
+            'via' => App\Logging\OpenTelemetryLoggerFactory::class,
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
     ],
 
 ];

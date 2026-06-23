@@ -1,0 +1,45 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+
+exporters:
+  debug: # コンソールにテレメトリーデータを出力するためdebugを使用
+    verbosity: detailed
+  nop:
+  otlp_http:
+    endpoint: "https://otlp-vaxila.mackerelio.com"
+    headers:
+      Accept: "*/*"
+      Mackerel-Api-Key: ${env:MACKEREL_APIKEY}
+    sending_queue:
+      batch:
+        flush_timeout: 200ms
+        min_size: 8192
+  otlp_http/loki:
+    endpoint: "http://loki:3100/otlp"
+  otlp:
+    endpoint: "otlp.mackerelio.com:4317"
+    headers:
+      Mackerel-Api-Key: ${env:MACKEREL_APIKEY}
+    sending_queue:
+      batch:
+
+service:
+  #telemetry:
+  #  logs:
+  #    level: DEBUG
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      exporters: [otlp]
+    traces:
+      receivers: [otlp]
+      exporters: [otlp_http]
+    logs:
+      receivers: [otlp]
+      exporters: [debug, otlp_http, otlp_http/loki]

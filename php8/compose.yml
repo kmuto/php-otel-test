@@ -13,7 +13,7 @@ services:
     environment:
       OTEL_SERVICE_NAME: php84-laravel
       OTEL_PHP_AUTOLOAD_ENABLED: true
-      OTEL_LOGS_EXPORTER: none
+      OTEL_LOGS_EXPORTER: otlp
       OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
       OTEL_RESOURCE_ATTRIBUTES: service.namespace=php-demo
 
@@ -38,10 +38,29 @@ services:
   #    - php-network2
 
   otel-collector:
-    image: mackerel/otelcol-mackerel:latest
+    image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:latest
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
+    command: ["--config=/etc/otel-collector-config.yml"]
+    #image: mackerel/otelcol-mackerel:latest
     environment:
       MACKEREL_APIKEY: "${MACKEREL_APIKEY}"
       OTELCOL_MACKEREL_HOST: otel-collector
+    networks:
+      - php-network2
+
+  loki:
+    image: "grafana/loki:3.1.1"
+    volumes:
+      - "./loki.yaml:/etc/loki/local-config.yaml"
+    networks:
+      - php-network2
+  grafana:
+    image: "grafana/grafana:11.2.0"
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./datasources/loki.yaml:/etc/grafana/provisioning/datasources/loki.yaml"
     networks:
       - php-network2
 
