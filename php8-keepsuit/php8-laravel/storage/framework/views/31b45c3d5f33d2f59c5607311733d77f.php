@@ -68,7 +68,7 @@
         </svg>
 
         <h1>Hello, Laravel!</h1>
-        <h3>PHP8 + PHPゼロコード計装</h3>
+        <h3>PHP8 + PHPゼロコード計装 (keepsuit ver.)</h3>
         
         <div class="version-box">
             <div class="version-item">
