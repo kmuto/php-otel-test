@@ -1,0 +1,43 @@
+services:
+  php84-laravel-keepsuit:
+    build:
+      context: .
+    ports:
+      - "8003:8003"
+    networks:
+      - php-network3
+    volumes:
+      - .:/work
+    working_dir: /work/php8-laravel
+    command: php artisan serve --host=0.0.0.0 --port=8003
+    environment:
+      OTEL_SERVICE_NAME: php84-laravel-keepsuit
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+      OTEL_RESOURCE_ATTRIBUTES: service.namespace=php-demo
+
+  db:
+    image: mariadb:10.6
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
+      MARIADB_DATABASE: laravel
+    volumes:
+      - php-db3:/var/lib/mysql
+    networks:
+      - php-network3
+
+  otel-collector:
+    image: mackerel/otelcol-mackerel:latest
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
+    command: ["--config=/etc/otel-collector-config.yml"]
+    environment:
+      MACKEREL_APIKEY: "${MACKEREL_APIKEY}"
+      OTELCOL_MACKEREL_HOST: otel-collector
+    networks:
+      - php-network3
+
+networks:
+  php-network3:
+
+volumes:
+  php-db3:

@@ -65,3 +65,24 @@ MACKEREL_APIKEY=<YOUR MACKEREL API KEY> docker compose up
 
 - Laravelのゼロコード計装をしているため、細かな計装がされている。PDOのゼロコード計装がないのでphp8のほうに比べると少しスパンが少ない
 - とはいえphp8同程度に必要な情報は可視化される
+
+## PHP 8.4 ゼロコード計装（Keepsuit版）
+```
+cd php8-keepsuit
+docker compose build
+docker compose up -d db
+docker compose run --rm php84-laravel-keepsuit ./setup.sh
+MACKEREL_APIKEY=<YOUR MACKEREL API KEY> docker compose up
+```
+
+`setup.sh`は初回のみでよい。
+
+- http://localhost:8003/
+- http://localhost:8003/fruits
+- http://localhost:8003/call
+- http://localhost:8003/query
+
+サービス名は「php84-laravel-keepsuit」としている。
+
+- OpenTelemetry Projectのものではなく、Keepsuitという別の団体によるもの。拡張は不要。フレームワークのコントローラ名スパンなどは作られず、代わりにビューが細かくスパン化される。
+- ログの設定はより簡易である。
