@@ -54,6 +54,7 @@ Route::get('/hello', function () {
 });
 
 Route::get('/call', function () {
+    Log::info("Calling external API server");
     $response = Http::get('https://jsonplaceholder.typicode.com/posts');
     $htmlData = '<p>Returned from External API Server:</p><div class="pre"><pre>';
     if ($response->successful()) {
@@ -73,5 +74,6 @@ Route::get('/error', function () {
 });
 
 Route::get('/query', function () {
-  throw new \InvalidArgumentException("Invalid ID: -1");
+    Log::info("Executing query for /query route");
+    throw new \InvalidArgumentException("Invalid ID: -1");
 });

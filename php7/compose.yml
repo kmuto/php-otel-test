@@ -22,7 +22,7 @@ services:
     networks:
       - php-network
   obi:
-    image: docker.io/otel/ebpf-instrument:main
+    image: docker.io/otel/ebpf-instrument:latest
     pid: 'host'
     privileged: true
     environment:

@@ -1,4 +1,4 @@
-trace_printer: text
+trace_printer: json_indent
 
 open_port: 8000
 

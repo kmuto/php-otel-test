@@ -1,0 +1,35 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+  transform:
+    log_statements:
+      - context: log
+        statements:
+          - set(time_unix_nano, observed_time_unix_nano) where time_unix_nano == 0
+
+exporters:
+  debug: # コンソールにテレメトリーデータを出力するためdebugを使用
+    verbosity: detailed
+  nop:
+  mackerel_otlp:
+
+service:
+  #telemetry:
+  #  logs:
+  #    level: DEBUG
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      exporters: [mackerel_otlp]
+    traces:
+      receivers: [otlp]
+      exporters: [mackerel_otlp]
+    logs:
+      receivers: [otlp]
+      processors: [transform]
+      exporters: [debug, mackerel_otlp]
