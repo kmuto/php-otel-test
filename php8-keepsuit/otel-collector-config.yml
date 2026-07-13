@@ -4,14 +4,6 @@ receivers:
       http:
         endpoint: 0.0.0.0:4318
 
-processors:
-  batch:
-  transform:
-    log_statements:
-      - context: log
-        statements:
-          - set(time_unix_nano, observed_time_unix_nano) where time_unix_nano == 0
-
 exporters:
   debug: # コンソールにテレメトリーデータを出力するためdebugを使用
     verbosity: detailed
@@ -31,5 +23,4 @@ service:
       exporters: [mackerel_otlp]
     logs:
       receivers: [otlp]
-      processors: [transform]
-      exporters: [debug, mackerel_otlp]
+      exporters: [mackerel_otlp]
